@@ -7,13 +7,15 @@ const inputApellidos = document.getElementById('apellidos');
 const inputTelefono = document.getElementById('telefono');
 const inputDireccion = document.getElementById('direccion');
 
+const API_URL = 'https://api-clientes-production-05d1.up.railway.app/api/clientes';
+
 // Cargar clientes al abrir la página
 document.addEventListener('DOMContentLoaded', obtenerClientes);
 
 // Obtener clientes
 async function obtenerClientes() {
     try {
-        const respuesta = await fetch('/api/clientes');
+        const respuesta = await fetch(API_URL);
         const clientes = await respuesta.json();
 
         tablaClientes.innerHTML = '';
@@ -73,7 +75,7 @@ formCliente.addEventListener('submit', async (e) => {
 
     try {
         if (inputId.value) {
-            await fetch(`/api/clientes/${inputId.value}`, {
+            await fetch(`${API_URL}/${inputId.value}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -81,7 +83,7 @@ formCliente.addEventListener('submit', async (e) => {
                 body: JSON.stringify(cliente)
             });
         } else {
-            await fetch('/api/clientes', {
+            await fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -105,7 +107,7 @@ async function eliminarCliente(id) {
     if (!confirmar) return;
 
     try {
-        await fetch(`/api/clientes/${id}`, {
+        await fetch(`${API_URL}/${id}`, {
             method: 'DELETE'
         });
 
